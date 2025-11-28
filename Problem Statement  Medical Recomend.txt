@@ -1,0 +1,103 @@
+Problem Statement : Medical Recomendation Systems.
+
+-->Our Problem is actually a multiclass classification problem where we need to predict one class out of more than 2 classes
+
+High level view of the project:
+-> We input some side effects and the model interrprets it and recommends us only relevant infos .
+
+-> The model provides us with disease name,description precautions , medications ,workout, diet.
+
+Description of datasets:
+-> Training : Contains data of 41 diseases and there symptoms
+Each row shows a disease and columns of that row shows differnt symptoms there are 131 such columns
+
+Top Models
+--> models such as SVC, RandomForest, GradientBoosting, KNNclassifier, multinomialnaivebayes
+--> algorithms that can
+  ->handle multiclass
+  -> work with categorical/ binary feature
+  -> are atleast measureable
+  -> balance accuracy and interpretability.
+
+Why SVC ?
+Since our dataset contains symptoms(for each column) as 0 or 1 not continous values in such cases of sparse or high dimensional the data points of different classes are often seperable by straight boundary so we prefer svc linear hyperplane works perfect
+
+Why RandomForest ?
+Since decision trees naturally captures yes or no systems easily and each feature can be treated as question (is fever present -Y/N or is cough present -Y/N)
+Since some diseases can be defined as a combination of symptoms (fever+rash=typhoid) so RF capture these easily since trees cna be easily be mulptile branched.
+Single Decision tree can memorize data but random forest averages across many trees so reducing ovefitiing.
+
+Why GradientBoosting
+Handles mulitclass clasification efficinetly
+Boosting pay extra attetion to misclassified examples-those hard to distingush critical in medicine model doesnt ignore rare or tricky conditon, it progressively becomes better at differentiating disease with similar symptoms patterns.
+
+Why knn ?
+knn mimic real world medical reasoning
+Doctors often reason based on similar past cases:
+“In patients who had fever + headache + nausea, 80% had Typhoid.”
+KNN directly models this intuition.
+It doesn’t try to build a formula — it just compares symptom pattern
+
+Why mulitnomial NB ?
+Multinomial Naive Bayes works best when your features represent counts or frequencies — such as how many times a word appears, or how many symptoms are present.
+Since your dataset has symptoms represented as 0 (absent) or 1 (present), MNB is an excellent fit.
+Unlike SVC or KNN, MNB gives you the probability of each disease. This is great for medical applications:
+“This patient is 80% likely to have Typhoid, 15% Malaria, 5% Flu.”
+That’s not only interpretable — it also helps rank diseases for recommendations.
+
+Single Predictions  
+one by one use we use different models to singly predict data.
+--> run a model 
+--> save the model
+--> importing model and 
+--> selecting data and predicting correesponding to that 
+
+Model Predcition Functions 
+First we create an empty list of size 132 where every index has zero value stored this acts as a input vector where we take inputs from users and mapp those inputs or symptoms to there coresponding indexes to 1 
+
+Why did the every model was having an accuracy of 1
+Your dataset is deterministic, not probabilistic.
+Each disease in your data always has the same, unique symptom pattern — a specific combination of 0s and 1s — and no other disease ever shares that same pattern.
+That means If you know the symptoms (the feature vector), you can exactly identify the disease.
+There’s no overlap between classes, no ambiguity, and no noise.Every model—no matter how it works—can perfectly separate the data.
+
+After adiition of noise what can happen ?
+Model 1-line Interview Summary
+SVC --Best when data is still linearly separable with minimal noise.
+Random Forest --Best when noise is moderate and relationships are non-linear.
+Gradient Boosting-- Best when interactions are complex and subtle.
+KNN --Best when nearby samples share similar labels even after noise.
+Multinomial NB--Best when features stay conditionally independent and categorical.
+
+When the interviewer asks:
+
+“Why do you think different models performed differently after adding noise?”
+
+You can respond like this 👇
+
+“Initially, all models gave 100% accuracy because the dataset had a deterministic one-to-one mapping — there was no overlap between diseases. After adding noise, we introduced ambiguity and overlap between classes.
+
+Models like SVC did well when separability remained linear; Random Forest excelled when noise increased and relationships became non-linear; Gradient Boosting captured complex, subtle interactions; KNN thrived when local structure persisted; and Naive Bayes stayed strong when feature independence roughly held true.
+
+So, the model that performed best reflects which underlying data property (linearity, non-linearity, locality, or independence) dominated after noise was added.”
+
+
+Q) See how does the fliiping actually  works
+ or additon of noise .
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
